@@ -1,91 +1,70 @@
 import java.util.Scanner;
 
 public class Main {
-
     public static void main(String[] args) {
-
         Scanner sc = new Scanner(System.in);
 
-        String tipe = sc.next(); // Soal1, Soal2, dst
+        if (!sc.hasNext()) return;
 
-        switch (tipe) {
+        // Membaca token pertama untuk menentukan soal mana yang dikerjakan
+        String task = sc.next();
 
-            // ================= SOAL 1 =================
-            case "Soal1":
+        if (task.equals("Soal1")) {
+            // Soal 1: Integer Overflow Detection
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            int sum = a + b;
 
-                int a = sc.nextInt();
-                int b = sc.nextInt();
+            // Logika deteksi overflow tanpa long/try-catch
+            if ((a > 0 && b > 0 && sum < 0) || (a < 0 && b < 0 && sum > 0)) {
+                System.out.println("OVERFLOW");
+            } else {
+                System.out.println(sum);
+            }
 
-                int sum = a + b;
+        } else if (task.equals("Soal2")) {
+            // Soal 2: Float vs Double Precision
+            double x = sc.nextDouble();
+            double y = sc.nextDouble();
 
-                if ((a > 0 && b > 0 && sum < 0) ||
-                    (a < 0 && b < 0 && sum > 0)) {
-                    System.out.println("OVERFLOW");
-                } else {
-                    System.out.println(sum);
-                }
-                break;
+            float fSum = (float) x + (float) y;
+            double dSum = x + y;
+            double diff = Math.abs(fSum - dSum);
 
-            // ================= SOAL 2 =================
-            case "Soal2":
+            System.out.printf("%.6f\n", diff);
 
-                float f1 = sc.nextFloat();
-                float f2 = sc.nextFloat();
+        } else if (task.equals("Soal3")) {
+            // Soal 3: Primitive vs Wrapper
+            int n = sc.nextInt();
+            Integer a = n; // Autoboxing
+            Integer b = a;
+            a = a + 1; // Unboxing lalu autoboxing ke objek baru
 
-                double d1 = (double) f1;
-                double d2 = (double) f2;
+            System.out.println("==: " + (a == b));
+            System.out.println("equals: " + a.equals(b));
 
-                float floatSum = f1 + f2;
-                double doubleSum = d1 + d2;
+        } else if (task.equals("Soal4")) {
+            // Soal 4: String Immutability
+            String s = sc.next();
+            String a = s;
+            String b = new String(s);
+            a = a + "X"; // String baru karena immutable
 
-                double diff = Math.abs(floatSum - doubleSum);
+            System.out.println("==: " + (a == b));
+            System.out.println("equals: " + a.equals(b));
 
-                System.out.printf("%.6f", diff);
-                break;
+        } else if (task.equals("Soal5")) {
+            // Soal 5: Parsing & Type Safety
+            int iVal = Integer.parseInt(sc.next());
+            double dVal = Double.parseDouble(sc.next());
+            boolean bVal = Boolean.parseBoolean(sc.next());
 
-            // ================= SOAL 3 =================
-            case "Soal3":
+            double result = iVal * dVal;
+            if (!bVal) {
+                result *= -1;
+            }
 
-                int n = sc.nextInt();
-
-                Integer objA = Integer.valueOf(n);
-                Integer objB = objA;
-
-                objA = objA + 1;
-
-                System.out.println("==: " + (objA == objB));
-                System.out.println("equals: " + objA.equals(objB));
-                break;
-
-            // ================= SOAL 4 =================
-            case "Soal4":
-
-                String s = sc.next();
-
-                String strA = s;
-                String strB = new String(s);
-
-                strA = strA + "X";
-
-                System.out.println("==: " + (strA == strB));
-                System.out.println("equals: " + strA.equals(strB));
-                break;
-
-            // ================= SOAL 5 =================
-            case "Soal5":
-
-                int integer = sc.nextInt();
-                double dbl = sc.nextDouble();
-                boolean bool = sc.nextBoolean();
-
-                double result = integer * dbl;
-
-                if (!bool) {
-                    result *= -1;
-                }
-
-                System.out.printf("%.2f", result);
-                break;
+            System.out.printf("%.2f\n", result);
         }
 
         sc.close();
